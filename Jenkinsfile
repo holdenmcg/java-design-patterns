@@ -4,6 +4,7 @@ pipeline {
     stage('Test') {
         steps {
             git 'https://github.com/holdenmcg/onlinebookstore.git'
+            sh 'ls -la'
             sh '''docker pull returntocorp/semgrep-agent:v1 && \
     docker run -v "$(pwd):$(pwd)" --workdir $(pwd) \
     returntocorp/semgrep-agent:v1 semgrep-agent \

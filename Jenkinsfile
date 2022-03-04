@@ -33,8 +33,12 @@ environment {
             sh 'echo $SEMGREP_COMMIT'
             sh 'ls -la'
             sh '''docker pull returntocorp/semgrep-agent:v1 && \
-    docker run -v "$(pwd):$(pwd)" --workdir $(pwd) \
-    returntocorp/semgrep-agent:v1 semgrep-agent --publish-token $SEMGREP_APP_TOKEN'''
+    docker run \
+    -e SEMGREP_REPO_URL=$SEMGREP_REPO_URL \
+    -e SEMGREP_BRANCH=$SEMGREP_BRANCH \
+    -e SEMGREP_REPO_NAME=$SEMGREP_REPO_NAME \
+    -v "$(pwd):$(pwd)" --workdir $(pwd) \
+    returntocorp/semgrep-agent:v1 semgrep-agent --publish-token $SEMGREP_APP_TOKEN '''
         }
     }
   }

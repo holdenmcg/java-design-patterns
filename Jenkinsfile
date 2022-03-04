@@ -10,7 +10,7 @@ environment {
     // Get your token from semgrep.dev/manage/settings.
       SEMGREP_APP_TOKEN = credentials('SEMGREP_APP_TOKEN')
       SEMGREP_REPO_URL = env.GIT_URL.replaceFirst(/^(.*).git$/,'$1')
-      SEMGREP_BRANCH = "${CHANGE_BRANCH}"
+      SEMGREP_BRANCH = "${GIT_BRANCH}"
       SEMGREP_JOB_URL = "${BUILD_URL}"
       SEMGREP_REPO_NAME = env.GIT_URL.replaceFirst(/^https:\/\/github.com\/(.*).git$/, '$1')
       SEMGREP_COMMIT = "${GIT_COMMIT}"
@@ -28,6 +28,9 @@ environment {
         steps {
             sh 'echo $SEMGREP_APP_TOKEN'
             sh 'echo $SEMGREP_REPO_URL'
+            sh 'echo $SEMGREP_REPO_NAME'
+            sh 'echo $SEMGREP_BRANCH'
+            sh 'echo $SEMGREP_COMMIT'
             sh 'ls -la'
             sh '''docker pull returntocorp/semgrep-agent:v1 && \
     docker run -v "$(pwd):$(pwd)" --workdir $(pwd) \
